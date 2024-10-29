@@ -4,7 +4,7 @@ const Register = () => {
 
     return (
       <>
-        <FormRegister onRegister={() => console.log('register')}/>
+        <FormRegister />
       </>
     )
   }
