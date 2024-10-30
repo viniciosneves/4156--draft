@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { Outlet } from "react-router"
-import { Header } from "./presentation/Header"
+import { Header } from "../presentation/Header"
 
 const Container = styled.div`
   display: flex;
