@@ -1,20 +1,14 @@
 import { Link } from "react-router-dom"
-import { Button } from "../Button"
-import { IconAvatar, IconLogo } from "../Icons"
-import { TransparentButton } from "../TransparentButton"
+import { IconLogo } from "../Icons"
 import { Container, StyledHeader, List, ListItem } from "./styles"
 import { useAuthContext } from "../../app/hooks/useAuthContext"
-import { toast } from "react-toastify"
+import { AuthenticatedActionList } from "./AuthenticatedActionList"
+import { UnauthenticatedActionList } from "./UnauthenticatedActionList"
 
 export const Header = () => {
     
-    const { logout } = useAuthContext()
 
-    const onAskForLogout = async () => {
-        console.log('logout')
-        await logout()
-        toast.success('Deslogado com sucesso!')
-    }
+    const { session } = useAuthContext()
 
     return (<StyledHeader>
         <Container>
@@ -25,29 +19,7 @@ export const Header = () => {
                     </Link>
                 </ListItem>
             </List>
-            <List>
-                <ListItem>
-                    <Button link to="/auth/register">
-                        Abrir conta
-                    </Button>
-                </ListItem>
-                <ListItem>
-                    <Button outline link to="/auth/login">
-                        Login
-                    </Button>
-                </ListItem>
-                <ListItem>
-                    Joana da Silva Oliveira
-                </ListItem>
-                <ListItem>
-                    <IconAvatar />
-                </ListItem>
-                <ListItem>
-                    <TransparentButton onClick={onAskForLogout}>
-                        Logout
-                    </TransparentButton>
-                </ListItem>
-            </List>
+            {session ? <AuthenticatedActionList /> : <UnauthenticatedActionList />}
         </Container>
     </StyledHeader>)
 }
