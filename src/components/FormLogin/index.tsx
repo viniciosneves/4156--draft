@@ -4,13 +4,14 @@ import { Fieldset } from "../Fieldset";
 import { Figure, Form, FormActions, Heading, Image } from "../Form";
 import { FormLabel } from "../FormLabel";
 import { TextField } from "../TextField";
+import { useAuthContext } from "../../app/hooks/useAuthContext";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
-interface FormLoginProps {
-    onLogin: () => void
-}
-
-export const FormLogin = ({ onLogin }: FormLoginProps) => {
+export const FormLogin = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
+    const { login } = useAuthContext()
+    const navigate = useNavigate()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -20,10 +21,16 @@ export const FormLogin = ({ onLogin }: FormLoginProps) => {
         }));
     };
 
-    const loginUser = (evt: React.FormEvent<HTMLFormElement>) => {
+    const loginUser = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        console.log(credentials);
-        onLogin()
+        try {
+            await login(credentials.email, credentials.password)
+            toast.success('Boas vindas ao Anybank!')
+            navigate('/')
+        } catch (error) {
+            console.log(error)
+            toast.error('Usuário ou senha inválidos!')
+        }
     };
 
     return (
