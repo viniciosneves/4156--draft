@@ -3,11 +3,17 @@ import { Button } from "../Button"
 import { IconAvatar, IconLogo } from "../Icons"
 import { TransparentButton } from "../TransparentButton"
 import { Container, StyledHeader, List, ListItem } from "./styles"
+import { useAuthContext } from "../../app/hooks/useAuthContext"
+import { toast } from "react-toastify"
 
 export const Header = () => {
+    
+    const { logout } = useAuthContext()
 
-    const onAskForLogout = () => {
+    const onAskForLogout = async () => {
         console.log('logout')
+        await logout()
+        toast.success('Deslogado com sucesso!')
     }
 
     return (<StyledHeader>
