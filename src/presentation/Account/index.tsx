@@ -1,4 +1,4 @@
-import { Balance } from "./Balance";
+import { Balance } from "../Balance";
 import { Card, DateWrapper, GreetingWrapper, Heading } from "./styles"
 
 const options: Intl.DateTimeFormatOptions = {
@@ -15,7 +15,7 @@ export const Account = () => {
                 {new Date().toLocaleDateString('pt-BR', options)}
             </DateWrapper>
             <Heading>
-                Olá, Joana! :)
+                Olá! :)
             </Heading>
         </GreetingWrapper>
         <div>

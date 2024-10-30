@@ -1,8 +1,8 @@
 import styled from "styled-components"
-import { Sidebar } from "./components/Sidebar"
-import { Account } from "./components/Account"
-import { TransactionForm } from "./components/TransactionForm"
-import { Statement } from "./components/Statement"
+import { Account } from "./presentation/Account"
+import { TransactionForm } from "./presentation/TransactionForm"
+import { Statement } from "./presentation/Statement"
+import { Sidebar } from "./presentation/Sidebar"
 
 const Main = styled.main`
     flex-grow: 1;

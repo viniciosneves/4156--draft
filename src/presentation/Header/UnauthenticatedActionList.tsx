@@ -1,5 +1,5 @@
+import { Button } from "../../components/Button"
 import { List, ListItem } from "./styles"
-import { Button } from "../Button"
 
 export const UnauthenticatedActionList = () => {
     return (<List>
