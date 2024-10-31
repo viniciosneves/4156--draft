@@ -34,6 +34,38 @@ export type Database = {
   }
   public: {
     Tables: {
+      transaction: {
+        Row: {
+          created_at: string
+          id: number
+          transaction_type_id: number
+          user_id: string
+          value: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          transaction_type_id: number
+          user_id: string
+          value: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          transaction_type_id?: number
+          user_id?: string
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transaction_transaction_type_id_fkey"
+            columns: ["transaction_type_id"]
+            isOneToOne: false
+            referencedRelation: "transaction_type"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       transaction_type: {
         Row: {
           created_at: string
