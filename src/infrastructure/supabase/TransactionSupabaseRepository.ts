@@ -1,3 +1,4 @@
+import { ITransaction } from "../../domain/entities/ITransaction";
 import { ITransactionRepository } from "../../domain/repositories/ITransactionRepository";
 import { supabase } from "./config";
 
@@ -20,5 +21,37 @@ export class TransactionSupabaseRepository implements ITransactionRepository {
             throw error
         }
 
+    }
+
+    async listAll(): Promise<ITransaction[]> {
+        const { data, error } = await supabase
+            .from('transaction')
+            .select(`
+                id,
+                value,
+                transaction_type_id,
+                user_id,
+                created_at,
+                transaction_type (
+                    id,
+                    display
+                )
+            `)
+
+        if (error) {
+            throw error
+        }
+
+        if (!data) {
+            
+            return []
+        }
+
+        return data.map(row => {
+            return {
+                ...row,
+                date: new Date(row.created_at)
+            }
+        })
     }
 }

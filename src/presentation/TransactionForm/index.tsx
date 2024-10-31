@@ -8,10 +8,17 @@ import { Dropdown } from "../../components/Dropdown"
 import { ListTransactionTypes } from "../../domain/useCases/ListTransactionTypes"
 import { TransactionTypeSupabaseRepository } from "../../infrastructure/supabase/TransactionTypeSupabaseRepository"
 import { ITransactionType } from "../../domain/entities/ITransactionType"
+import { CreateTransaction } from "../../domain/useCases/CreateTransaction"
+import { TransactionSupabaseRepository } from "../../infrastructure/supabase/TransactionSupabaseRepository"
+import { useAuthContext } from "../../app/hooks/useAuthContext"
+import { toast } from "react-toastify"
 
 const listTransactionTypes = new ListTransactionTypes(new TransactionTypeSupabaseRepository())
+const createTransaction = new CreateTransaction(new TransactionSupabaseRepository())
 
 export const TransactionForm = () => {
+
+    const { session } = useAuthContext()
 
     const [transactionTypes, setTransactionTypes] = useState<ITransactionType[]>([])
 
@@ -23,18 +30,22 @@ export const TransactionForm = () => {
             .then(data => setTransactionTypes(data))
     }, [])
 
-    const createTransacion = (evt: React.FormEvent<HTMLFormElement>) => {
+    const handleFormSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
-        console.log({
-            transactionType,
-            transactionValue
-        })
+        if (session) {            
+            await createTransaction.execute(
+                parseFloat(transactionValue),
+                parseInt(transactionType),
+                session.user.id
+            )
+            toast.success('Transação criada com sucesso!')
+        }
     }
 
     return (
         <Card>
             <Wrapper>
-                <Form onSubmit={createTransacion}>
+                <Form onSubmit={handleFormSubmit}>
                     <Heading>
                         Nova transação
                     </Heading>

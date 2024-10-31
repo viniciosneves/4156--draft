@@ -1,4 +1,5 @@
-import { ITransaction, Transaction } from "../../components/Transaction";
+import { Transaction } from "../../components/Transaction";
+import { ITransaction } from "../../domain/entities/ITransaction";
 import { Container, Heading, MonthLabel, TransactionsList } from "./styles";
 
 const groupTransactions = (transactions: ITransaction[]): Record<string, ITransaction[]> => {

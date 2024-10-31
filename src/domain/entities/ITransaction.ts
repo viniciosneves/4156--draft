@@ -6,4 +6,5 @@ export interface ITransaction {
     user_id: string
     value: number
     transaction_type: ITransactionType
+    date: Date
 }
